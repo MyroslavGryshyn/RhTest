@@ -15,3 +15,14 @@ class UserProfileCreateTest(TestCase):
         self.assertEqual(UserProfile.objects.count(), 1)
         new_user_profile = UserProfile.objects.first()
         self.assertEqual(new_user_profile.iban, 111111111)
+
+    def test_redirecting_after_POST_request(self):
+
+        response = self.client.post(
+            '/add/',
+            data={'first_name': "Jane",
+                  'last_name': "Doe",
+                  'iban': "22222222"}
+        )
+
+        self.assertRedirects(response, "/")

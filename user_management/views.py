@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
 from user_management.models import UserProfile
 
 
@@ -8,6 +9,10 @@ class UserProfileCreate(CreateView):
     fields = '__all__'
     template_name = 'user_form.html'
 
-    # ToDo: change it to home
     def get_success_url(self):
-        return reverse('user_add')
+        return reverse('home')
+
+
+class UserProfileList(ListView):
+    model = UserProfile
+    template_name = 'user_list.html'
