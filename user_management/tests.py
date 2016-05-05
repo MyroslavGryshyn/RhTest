@@ -71,3 +71,24 @@ class CustomerUpdateTest(TestCase):
         )
 
         self.assertRedirects(response, "/")
+
+
+class CustomerDeleteTest(TestCase):
+
+    def test_delete_customer(self):
+        Customer.objects.create(
+            first_name="John", last_name="Doe", iban="111111111")
+        self.client.post('/customers/1/delete/')
+
+        self.assertEqual(Customer.objects.count(), 0)
+
+    def test_deletes_right_customer(self):
+        Customer.objects.create(
+            first_name="John", last_name="Doe", iban="111111111")
+        Customer.objects.create(
+            first_name="Jane", last_name="Doe", iban="111111111")
+
+        response = self.client.post('/customers/1/delete/')
+
+        jane_doe = Customer.objects.first()
+        self.assertEqual(jane_doe.first_name, "Jane")
