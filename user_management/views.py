@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from django.views.generic.edit import CreateView
+from user_management.models import UserProfile
 
-# Create your views here.
+
+class UserProfileCreate(CreateView):
+    model = UserProfile
+    fields = '__all__'
+    template_name = 'user_form.html'
