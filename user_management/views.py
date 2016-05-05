@@ -6,3 +6,4 @@ class UserProfileCreate(CreateView):
     model = UserProfile
     fields = '__all__'
     template_name = 'user_form.html'
+    success_url = 'home'
