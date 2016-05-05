@@ -4,7 +4,7 @@ from django.views.generic.list import ListView
 from user_management.models import Customer
 
 
-class CustomerCreate(CreateView):
+class CustomerCreateView(CreateView):
     model = Customer
     fields = '__all__'
     template_name = 'user_form.html'
@@ -13,13 +13,13 @@ class CustomerCreate(CreateView):
         return reverse('home')
 
 
-class CustomerList(ListView):
+class CustomerListView(ListView):
     model = Customer
     template_name = 'user_list.html'
     context_object_name = 'customers'
 
 
-class CustomerUpdate(UpdateView):
+class CustomerUpdateView(UpdateView):
     model = Customer
     fields = '__all__'
     template_name = 'user_form.html'

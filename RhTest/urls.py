@@ -15,10 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from user_management.views import CustomerCreate, CustomerList
+from user_management.views import (
+    CustomerCreateView, CustomerListView,
+    CustomerUpdateView
+)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', CustomerList.as_view(), name='home'),
-    url(r'^add/', CustomerCreate.as_view(), name='customer_add'),
+    url(r'^$', CustomerListView.as_view(), name='home'),
+    url(r'^add/', CustomerCreateView.as_view(), name='customer_add'),
+    url(r'^customers/(?P<pk>\d+)/edit/$', CustomerUpdateView.as_view(),
+        name='customer_edit'),
 ]
