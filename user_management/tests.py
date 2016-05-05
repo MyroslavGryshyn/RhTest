@@ -51,7 +51,7 @@ class CustomerUpdateTest(TestCase):
         Customer.objects.create(
             first_name="John", last_name="Doe", iban="111111111")
         self.client.post(
-            '/customer/1/edit',
+            '/customers/1/edit/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
                   'iban': "22222222"}
@@ -61,8 +61,10 @@ class CustomerUpdateTest(TestCase):
         self.assertEqual(new_customer.iban, 22222222)
 
     def test_redirecting_after_POST_request(self):
+        Customer.objects.create(
+            first_name="John", last_name="Doe", iban="111111111")
         response = self.client.post(
-            '/customer/1/edit',
+            '/customers/1/edit/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
                   'iban': "22222222"}
