@@ -19,5 +19,5 @@ from user_management.views import UserProfileCreate
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^add/', UserProfileCreate.as_view()),
+    url(r'^add/', UserProfileCreate.as_view(), name='user_add'),
 ]
