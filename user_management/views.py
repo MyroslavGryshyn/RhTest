@@ -16,3 +16,4 @@ class UserProfileCreate(CreateView):
 class UserProfileList(ListView):
     model = UserProfile
     template_name = 'user_list.html'
+    context_object_name = 'user_profiles'
