@@ -1,11 +1,11 @@
 from django.core.urlresolvers import reverse
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
-from user_management.models import UserProfile
+from user_management.models import Customer
 
 
-class UserProfileCreate(CreateView):
-    model = UserProfile
+class CustomerCreate(CreateView):
+    model = Customer
     fields = '__all__'
     template_name = 'user_form.html'
 
@@ -13,7 +13,16 @@ class UserProfileCreate(CreateView):
         return reverse('home')
 
 
-class UserProfileList(ListView):
-    model = UserProfile
+class CustomerList(ListView):
+    model = Customer
     template_name = 'user_list.html'
-    context_object_name = 'user_profiles'
+    context_object_name = 'customers'
+
+
+class CustomerUpdate(UpdateView):
+    model = Customer
+    fields = '__all__'
+    template_name = 'user_form.html'
+
+    def get_success_url(self):
+        return reverse('home')

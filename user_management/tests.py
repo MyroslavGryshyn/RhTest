@@ -1,8 +1,8 @@
 from django.test import TestCase
-from .models import UserProfile
+from .models import Customer
 
 
-class UserProfileCreateTest(TestCase):
+class CustomerCreateTest(TestCase):
 
     def test_saving_a_POST_request(self):
         self.client.post(
@@ -12,9 +12,9 @@ class UserProfileCreateTest(TestCase):
                   'iban': "111111111"}
         )
 
-        self.assertEqual(UserProfile.objects.count(), 1)
-        new_user_profile = UserProfile.objects.first()
-        self.assertEqual(new_user_profile.iban, 111111111)
+        self.assertEqual(Customer.objects.count(), 1)
+        new_customer = Customer.objects.first()
+        self.assertEqual(new_customer.iban, 111111111)
 
     def test_redirecting_after_POST_request(self):
         response = self.client.post(
@@ -27,19 +27,44 @@ class UserProfileCreateTest(TestCase):
         self.assertRedirects(response, "/")
 
 
-class UserProfileListTest(TestCase):
+class CustomerListTest(TestCase):
 
-    def test_show_no_user_profiles(self):
+    def test_show_no_customers(self):
         response = self.client.get('/')
-        self.assertContains(response, "There are no user_profiles!")
+        self.assertContains(response, "There are no customers yet!")
 
-    def test_show_all_user_profiles(self):
-        john_doe = UserProfile.objects.create(
+    def test_show_all_customers(self):
+        john_doe = Customer.objects.create(
             first_name="John", last_name="Doe", iban="111111111")
-        jane_doe = UserProfile.objects.create(
+        jane_doe = Customer.objects.create(
             first_name="Jane", last_name="Doe", iban="22222222")
 
         response = self.client.get('/')
 
         self.assertContains(response, john_doe.first_name)
         self.assertContains(response, jane_doe.first_name)
+
+
+class CustomerUpdateTest(TestCase):
+
+    def test_saving_a_POST_request(self):
+        self.client.post(
+            '/add/',
+            data={'first_name': "John",
+                  'last_name': "Doe",
+                  'iban': "111111111"}
+        )
+
+        self.assertEqual(Customer.objects.count(), 1)
+        new_customer = Customer.objects.first()
+        self.assertEqual(new_customer.iban, 111111111)
+
+    def test_redirecting_after_POST_request(self):
+        response = self.client.post(
+            '/add/',
+            data={'first_name': "Jane",
+                  'last_name': "Doe",
+                  'iban': "22222222"}
+        )
+
+        self.assertRedirects(response, "/")

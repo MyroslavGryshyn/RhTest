@@ -1,7 +1,7 @@
-{% for user_profile in user_profiles %}
-    {{user_profile.first_name}}
-    {{user_profile.last_name}}
-    {{user_profile.iban}}
+{% for customer in customers %}
+    {{customer.first_name}}
+    {{customer.last_name}}
+    {{customer.iban}}
 {% empty %}
-    There are no user_profiles!
+    There are no customers yet!
 {% endfor %}

@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class UserProfile(models.Model):
+class Customer(models.Model):
     """
     Model for storing users.
     """
