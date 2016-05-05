@@ -2,12 +2,13 @@ from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from customer_management.models import Customer
+from customer_management.forms import CustomerCreateForm
 
 
 class CustomerCreateView(CreateView):
     model = Customer
-    fields = '__all__'
     template_name = 'customer_form.html'
+    form_class = CustomerCreateForm
 
     def get_success_url(self):
         return reverse('home')

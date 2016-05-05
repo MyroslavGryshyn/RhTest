@@ -1,5 +1,9 @@
-<form action="" align="center" method="post">
-    {{ form.as_p  }}
-     {% csrf_token %}
-    <input type="submit" value="Submit">
-</form>
+<!-- <form action="" align="center" method="post"> -->
+<!--     {{ form.as_p  }} -->
+<!--      {% csrf_token %} -->
+<!--     <input type="submit" value="Submit"> -->
+<!-- </form> -->
+
+{% load crispy_forms_tags %}
+
+{% crispy form %}
