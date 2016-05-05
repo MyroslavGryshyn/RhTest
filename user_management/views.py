@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from user_management.models import Customer
 
@@ -24,5 +24,17 @@ class CustomerUpdateView(UpdateView):
     fields = '__all__'
     template_name = 'user_form.html'
 
+
     def get_success_url(self):
         return reverse('home')
+
+
+class CustomerDeleteView(DeleteView):
+    model = Customer
+    template_name = 'user_form.html'
+
+
+    def get_success_url(self):
+        return reverse('home')
+
+

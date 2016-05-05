@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from user_management.views import (
     CustomerCreateView, CustomerListView,
-    CustomerUpdateView
+    CustomerUpdateView, CustomerDeleteView
 )
 
 urlpatterns = [
@@ -26,4 +26,6 @@ urlpatterns = [
     url(r'^add/', CustomerCreateView.as_view(), name='customer_add'),
     url(r'^customers/(?P<pk>\d+)/edit/$', CustomerUpdateView.as_view(),
         name='customer_edit'),
+    url(r'^customers/(?P<pk>\d+)/delete/$', CustomerDeleteView.as_view(),
+        name='customer_delete'),
 ]

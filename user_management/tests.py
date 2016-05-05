@@ -98,6 +98,6 @@ class CustomerDeleteTest(TestCase):
         Customer.objects.create(
             first_name="John", last_name="Doe", iban="111111111")
 
-        self.client.post('/customers/1/delete/')
+        response = self.client.post('/customers/1/delete/')
 
         self.assertRedirects(response, "/")
