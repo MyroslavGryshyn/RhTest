@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from customer_management.models import Customer
-from customer_management.forms import CustomerCreateForm
+from customer_management.forms import CustomerCreateForm, CustomerUpdateForm
 
 
 class CustomerCreateView(CreateView):
@@ -22,8 +22,8 @@ class CustomerListView(ListView):
 
 class CustomerUpdateView(UpdateView):
     model = Customer
-    fields = '__all__'
     template_name = 'customer_form.html'
+    form_class = CustomerUpdateForm
 
 
     def get_success_url(self):

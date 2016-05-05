@@ -1,7 +1,27 @@
-{% for customer in customers %}
-    {{customer.first_name}}
-    {{customer.last_name}}
-    {{customer.iban}}
-{% empty %}
+{% extends "base.html" %}
+
+
+{% block content %}
+{% if customers %}
+  <H2 align="center"> List of all customers: </H2>
+  <table class="table table-striped ">
+      <th class="info"> First name </th>
+      <th class="info"> Last name </th>
+      <th class="info"> Iban </th>
+      <th class="info"> Delete </th>
+    <tr>
+    <tbody>
+    {% for customer in customers %}
+      <td>{{customer.first_name}}</td>
+      <td>{{customer.last_name}}</td>
+      <td>{{customer.iban}}</td>
+      <td>{{customer.iban}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% else %}
     There are no customers yet!
-{% endfor %}
+{% endif %}
+
+{% endblock content %}
