@@ -88,7 +88,16 @@ class CustomerDeleteTest(TestCase):
         Customer.objects.create(
             first_name="Jane", last_name="Doe", iban="111111111")
 
-        response = self.client.post('/customers/1/delete/')
+        self.client.post('/customers/1/delete/')
 
         jane_doe = Customer.objects.first()
         self.assertEqual(jane_doe.first_name, "Jane")
+
+
+    def test_redirecting_after_deletion(self):
+        Customer.objects.create(
+            first_name="John", last_name="Doe", iban="111111111")
+
+        self.client.post('/customers/1/delete/')
+
+        self.assertRedirects(response, "/")
