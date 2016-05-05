@@ -2,4 +2,6 @@
     {{user_profile.first_name}}
     {{user_profile.last_name}}
     {{user_profile.iban}}
+{% empty %}
+    There are no user_profiles!
 {% endfor %}

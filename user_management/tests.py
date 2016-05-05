@@ -29,6 +29,10 @@ class UserProfileCreateTest(TestCase):
 
 class UserProfileListTest(TestCase):
 
+    def test_show_no_user_profiles(self):
+        response = self.client.get('/')
+        self.assertContains(response, "There are no user_profiles!")
+
     def test_show_all_user_profiles(self):
         john_doe = UserProfile.objects.create(
             first_name="John", last_name="Doe", iban="111111111")
