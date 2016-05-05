@@ -4,6 +4,8 @@ from django.forms import ModelForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
+from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
+from crispy_forms.bootstrap import StrictButton
 
 from .models import Customer
 
@@ -21,18 +23,12 @@ class CustomerCreateForm(ModelForm):
         self.helper.form_action = reverse('customer_add')
 
         self.helper.form_method = 'POST'
-        # self.helper.form_class = 'form-horizontal'
+        self.helper.form_class = 'form-horizontal'
 
-        # set form field properties
-        # self.helper.help_text_inline = False
-        # self.helper.html5_required = True
-        # self.helper.label_class = 'col-sm-2 control-label'
-        # self.helper.field_class = 'col-sm-10'
+        # Setting form properties
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-9'
 
-        # add buttons
-        # self.helper.layout[-1] = FormActions(
-        #     Submit('add_button', 'Submit', css_class="btn btn-pri mary"),
-        #     Submit('cancel_button', u'Скасувати', css_class="btn btn -link"),
-        # )
-
-        self.helper.add_input(Submit('submit', 'Submit'))
+        # add button
+        self.helper.add_input(Submit('submit', 'Submit',
+                                     css_class='btn-primary'))

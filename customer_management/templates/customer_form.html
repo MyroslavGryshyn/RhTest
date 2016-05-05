@@ -1,9 +1,17 @@
-<!-- <form action="" align="center" method="post"> -->
-<!--     {{ form.as_p  }} -->
-<!--      {% csrf_token %} -->
-<!--     <input type="submit" value="Submit"> -->
-<!-- </form> -->
-
 {% load crispy_forms_tags %}
-
-{% crispy form %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container-fluid">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <H2 align="center"> Please add a customer </H2>
+            {% crispy form %}
+    </div>
+    <div class="col-md-4"></div>
+    </div>
+  </body>
+</html>
