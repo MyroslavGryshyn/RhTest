@@ -7,9 +7,25 @@
     <div class="container-fluid">
     <div class="col-md-4"></div>
     <div class="col-md-4">
+    <ul class="nav nav-tabs">
+
+      {% url 'home' as the_home %}
+      <li role="presentation" {% if request.path == the_home %}
+          class="active"{% endif %}>
+         <a href="{% url 'home' %}">Customers list</a>
+      </li>
+
+      {% url 'customer_add' as the_customer_add %}
+      <li role="presentation" {% if request.path == the_customer_add %}
+          class="active"{% endif %}>
+        <a href="{% url 'customer_add' %}">Add customer</a>
+      </li>
+
+    </ul>
     {% block content %}{% endblock content %}
     </div>
-    <div class="col-md-4"></div>
+    <div class="col-md-4">
+    </div>
     </div>
   </body>
 </html>
