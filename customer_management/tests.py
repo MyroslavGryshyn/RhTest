@@ -9,12 +9,12 @@ class CustomerCreateTest(TestCase):
             '/add/',
             data={'first_name': "John",
                   'last_name': "Doe",
-                  'iban': "	DE89370400440532013000"}
+                  'iban': "DE89370400440532013000"}
         )
 
         self.assertEqual(Customer.objects.count(), 1)
         new_customer = Customer.objects.first()
-        self.assertEqual(new_customer.iban, 111111111)
+        self.assertEqual(new_customer.iban,  "DE89370400440532013000")
 
     def test_redirecting_after_POST_request(self):
         response = self.client.post(
