@@ -26,6 +26,12 @@ class CustomerUpdateView(UpdateView):
     template_name = 'customer_form.html'
     form_class = CustomerUpdateForm
 
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('cancel_button'):
+            return HttpResponseRedirect(reverse('home'))
+        else:
+            return super(CustomerUpdateView, self).post(
+                request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('home')

@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
-from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit
+from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Button
 from crispy_forms.bootstrap import StrictButton
 
 from .models import Customer
@@ -56,4 +56,6 @@ class CustomerUpdateForm(ModelForm):
 
         # add button
         self.helper.add_input(Submit('submit', 'Submit',
+                                     css_class='btn-primary'))
+        self.helper.add_input(Submit('cancel_button', 'Cancel',
                                      css_class='btn-primary'))
