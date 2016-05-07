@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
@@ -34,6 +35,12 @@ class CustomerDeleteView(DeleteView):
     model = Customer
     template_name = 'customer_confirm_delete.html'
 
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('cancel_button'):
+            return HttpResponseRedirect(reverse('home'))
+        else:
+            return super(CustomerDeleteView, self).post(
+                request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('home')
