@@ -21,7 +21,7 @@ class CustomerCreateTest(TestCase):
             '/add/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
-                  'iban': "	DE89370400440532013000"}
+                  'iban': "DE89370400440532013000"}
         )
 
         self.assertRedirects(response, "/")
@@ -35,6 +35,26 @@ class CustomerCreateTest(TestCase):
         )
 
         self.assertEqual(Customer.objects.count(), 0)
+
+    def test_duplicate_iban(self):
+        self.client.post(
+            '/add/',
+            data={'first_name': "John",
+                  'last_name': "Doe",
+                  'iban': "DE89370400440532013000"}
+        )
+
+        self.assertEqual(Customer.objects.count(), 1)
+
+        self.client.post(
+            '/add/',
+            data={'first_name': "Jane",
+                  'last_name': "Doe",
+                  'iban': "DE89370400440532013000"}
+        )
+
+        self.assertEqual(Customer.objects.count(), 1)
+
 
 class CustomerListTest(TestCase):
 
