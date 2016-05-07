@@ -26,6 +26,15 @@ class CustomerCreateTest(TestCase):
 
         self.assertRedirects(response, "/")
 
+    def test_invalid_iban(self):
+        self.client.post(
+            '/add/',
+            data={'first_name': "John",
+                  'last_name': "Doe",
+                  'iban': "GB82WEST1234569876543"}
+        )
+
+        self.assertEqual(Customer.objects.count(), 0)
 
 class CustomerListTest(TestCase):
 
