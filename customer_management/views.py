@@ -32,7 +32,7 @@ class CustomerUpdateView(UpdateView):
 
 class CustomerDeleteView(DeleteView):
     model = Customer
-    template_name = 'customer_form.html'
+    template_name = 'customer_confirm_delete.html'
 
 
     def get_success_url(self):
