@@ -15,6 +15,7 @@ class CustomerCreateForm(ModelForm):
         model = Customer
         fields = '__all__'
 
+
     def __init__(self, *args, **kwargs):
         super(CustomerCreateForm, self).__init__(*args, **kwargs)
 

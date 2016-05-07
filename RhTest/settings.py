@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'customer_management',
     'crispy_forms',
+    'localflavor',
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -1,4 +1,5 @@
 from django.db import models
+from localflavor.generic.models import IBANField
 
 
 class Customer(models.Model):
@@ -7,4 +8,4 @@ class Customer(models.Model):
     """
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    iban = models.CharField(max_length=30)
+    iban = IBANField()

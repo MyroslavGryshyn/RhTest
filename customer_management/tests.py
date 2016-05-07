@@ -63,11 +63,11 @@ class CustomerUpdateTest(TestCase):
             '/customers/1/edit/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
-                  'iban': "DE89370400440532013001"}
+                  'iban': "AL47 2121 1009 0000 0002 3569 8741"}
         )
 
         new_customer = Customer.objects.first()
-        self.assertEqual(new_customer.iban, "DE89370400440532013001")
+        self.assertEqual(new_customer.iban, "AL47212110090000000235698741")
 
     def test_redirecting_after_POST_request(self):
         Customer.objects.create(
@@ -76,7 +76,7 @@ class CustomerUpdateTest(TestCase):
             '/customers/1/edit/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
-                  'iban': "DE89370400440532013001"}
+                  'iban': "AL47 2121 1009 0000 0002 3569 8741"}
         )
 
         self.assertRedirects(response, "/")
