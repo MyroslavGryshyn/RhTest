@@ -13,8 +13,8 @@ class LoginPage(TemplateView):
     template_name = 'login.html'
 
 
-class CustomerCreateView(LoginRequiredMixin, CreateView):
-    login_url = '/login/'
+# class CustomerCreateView(LoginRequiredMixin, CreateView):
+class CustomerCreateView(CreateView):
     model = Customer
     template_name = 'customer_form.html'
     form_class = CustomerCreateForm
