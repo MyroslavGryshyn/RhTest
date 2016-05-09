@@ -29,7 +29,8 @@ class CustomerListView(ListView):
     context_object_name = 'customers'
 
 
-class CustomerUpdateView(UpdateView):
+class CustomerUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
     model = Customer
     template_name = 'customer_form.html'
     form_class = CustomerUpdateForm

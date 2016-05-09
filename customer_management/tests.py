@@ -105,9 +105,9 @@ class CustomerUpdateTest(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(
+        john = User.objects.create_user(
             'john', 'lennon@thebeatles.com', 'johnpassword')
-        self.client.login(username='john', password='johnpassword')
+        self.client.force_login(john)
 
     def test_saving_a_POST_request(self):
         Customer.objects.create(
@@ -138,14 +138,18 @@ class CustomerUpdateTest(TestCase):
         self.client.logout()
         self.client.login(username='jo', password='johnpassword')
 
-        self.client.post(
-            '/add/',
+        Customer.objects.create(
+            first_name="John", last_name="Doe", iban="DE89370400440532013000")
+
+        response = self.client.post(
+            '/customers/1/edit/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
-                  'iban': "DE89370400440532013000"}
+                  'iban': "AL47 2121 1009 0000 0002 3569 8741"}
         )
 
-        self.assertEqual(Customer.objects.count(), 0)
+        new_customer = Customer.objects.first()
+        self.assertEqual(new_customer.iban, "DE89370400440532013000")
 
 
 class CustomerDeleteTest(TestCase):
