@@ -76,6 +76,7 @@ TEMPLATES = [
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 WSGI_APPLICATION = 'RhTest.wsgi.application'
