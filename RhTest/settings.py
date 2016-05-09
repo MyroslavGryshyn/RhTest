@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'customer_management',
     'crispy_forms',
     'localflavor',
+    'social.apps.django_app.default',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -66,10 +67,16 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.google.GoogleOAuth2',
+)
 
 WSGI_APPLICATION = 'RhTest.wsgi.application'
 
@@ -124,3 +131,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# ToDo: 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "202958307914-nt82iv4dut99hfu40uto1cgln16es8oj.apps.googleusercontent.com"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "uLO4ZvclScyaDsnPQyvKCkft"
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_URL = '/'

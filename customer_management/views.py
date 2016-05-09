@@ -1,12 +1,20 @@
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.shortcuts import render
+from django.contrib.auth import logout as auth_logout
+from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
+from braces.views import LoginRequiredMixin
 from customer_management.models import Customer
 from customer_management.forms import CustomerCreateForm, CustomerUpdateForm
 
+class LoginPage(TemplateView):
+    template_name = 'login.html'
 
-class CustomerCreateView(CreateView):
+
+class CustomerCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
     model = Customer
     template_name = 'customer_form.html'
     form_class = CustomerCreateForm
@@ -52,3 +60,6 @@ class CustomerDeleteView(DeleteView):
         return reverse('home')
 
 
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect(reverse('home'))

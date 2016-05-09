@@ -21,6 +21,18 @@
         <a href="{% url 'customer_add' %}">Add customer</a>
       </li>
 
+      {% url 'login' as the_login %}
+      <li role="presentation" {% if request.path == the_login %}
+          class="active"{% endif %}>
+        <a href="{% url 'login' %}">
+          {% if user and not user.is_anonymous %}
+            {{ user.get_short_name }}
+          {% else %}
+            Login
+          {% endif %}
+        </a>
+      </li>
+
     </ul>
     {% block content %}{% endblock content %}
     </div>

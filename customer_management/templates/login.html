@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if user and not user.is_anonymous %}
+  <H3>Hello, {{ user.get_full_name }}!</H3>
+  <br>
+  <a href="/logout">Logout</a>
+
+{% else %}
+  <br>
+  <br>
+<a href="{% url 'social:begin' 'google-oauth2' %}{% if request.GET.next %}?next={{request.GET.next}}{% endif %}" class="btn btn-primary center-block"  role="button">Sign in with Google</a>
+
+{% endif %}
+
+{% endblock content %}
