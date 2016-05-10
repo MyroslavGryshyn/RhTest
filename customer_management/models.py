@@ -5,8 +5,6 @@ from localflavor.generic.models import IBANField
 
 class CustomerAdmin(models.Model):
     user = models.ForeignKey(User)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
 
 
 class Customer(models.Model):

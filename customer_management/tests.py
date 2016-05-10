@@ -15,7 +15,7 @@ class CustomerCreateTest(TestCase):
             'john', 'lennon@thebeatles.com', 'johnpassword')
 
         self.john_admin = CustomerAdmin.objects.create(
-            first_name='john', last_name='doe', user=john)
+            user=john)
 
         self.client.force_login(john)
 
@@ -99,7 +99,7 @@ class CustomerListTest(TestCase):
             'john', 'lennon@thebeatles.com', 'johnpassword')
 
         self.john_admin = CustomerAdmin.objects.create(
-            first_name='john', last_name='doe', user=john)
+            user=john)
 
     def test_show_no_customers(self):
         response = self.client.get('/')
@@ -128,7 +128,7 @@ class CustomerUpdateTest(TestCase):
             'john', 'lennon@thebeatles.com', 'johnpassword')
 
         self.john_admin = CustomerAdmin.objects.create(
-            first_name='john', last_name='doe', user=john)
+            user=john)
 
         self.client.force_login(john)
 
@@ -214,7 +214,7 @@ class CustomerDeleteTest(TestCase):
             'john', 'lennon@thebeatles.com', 'johnpassword')
 
         self.john_admin = CustomerAdmin.objects.create(
-            first_name='john', last_name='doe', user=john)
+            user=john)
 
         self.client.force_login(john)
 
