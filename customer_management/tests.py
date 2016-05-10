@@ -182,6 +182,29 @@ class CustomerUpdateTest(TestCase):
         new_customer = Customer.objects.first()
         self.assertEqual(new_customer.iban, "DE89370400440532013000")
 
+    def test_admin_can_update_only_own_customers(self):
+        self.client.logout()
+
+        jane = User.objects.create_user(
+            'jane', 'lennon@thebeatles.com', 'johnpassword')
+
+        self.client.force_login(jane)
+
+        Customer.objects.create(
+            first_name="John", last_name="Doe",
+            owner=self.john_admin, iban="DE89370400440532013000")
+
+        self.client.post(
+            '/customers/1/edit/',
+            data={'first_name': "Jane",
+                  'last_name': "Doe",
+                  'owner': self.john_admin.id,
+                  'iban': "AL47212110090000000235698741"}
+        )
+
+        new_customer = Customer.objects.first()
+        self.assertEqual(new_customer.iban, "DE89370400440532013000")
+
 
 class CustomerDeleteTest(TestCase):
 
