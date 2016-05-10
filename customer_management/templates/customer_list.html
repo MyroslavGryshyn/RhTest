@@ -3,6 +3,7 @@
 {% block content %}
 {% if customers %}
   <H2 align="center"> List of all customers: </H2>
+
   <table class="table table-striped ">
       <th class="info"> First name </th>
       <th class="info"> Last name </th>
@@ -11,11 +12,17 @@
     <tr>
     <tbody>
     {% for customer in customers %}
-      <td><a href = "{% url 'customer_edit' customer.id %}"> {{customer.first_name}}</a></td>
-      <td><a href = "{% url 'customer_edit' customer.id %}">{{customer.last_name}}</a></td>
-      <td><a href = "{% url 'customer_edit' customer.id %}">{{customer.iban}}</a></td>
-      <td><a href="{% url 'customer_delete' customer.id %}">Delete</a> 
-      </td>
+        {% if request.user == customer.owner.user %}
+          <td><a href = "{% url 'customer_edit' customer.id %}"> {{customer.first_name}}</a></td>
+          <td><a href = "{% url 'customer_edit' customer.id %}">{{customer.last_name}}</a></td>
+          <td><a href = "{% url 'customer_edit' customer.id %}">{{customer.iban}}</a></td>
+          <td><a href="{% url 'customer_delete' customer.id %}">Delete</a> 
+        {% else %}
+          <td>{{customer.first_name}}</td>
+          <td>{{customer.last_name}}</td>
+          <td>{{customer.iban}}</td>
+          <td></td>
+        {% endif %}
     </tr>
     {% endfor %}
     </tbody>

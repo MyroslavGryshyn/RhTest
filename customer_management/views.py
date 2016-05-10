@@ -43,11 +43,6 @@ class CustomerListView(LoginRequiredMixin, ListView):
     template_name = 'customer_list.html'
     context_object_name = 'customers'
 
-    def get_queryset(self):
-        owner = CustomerAdmin.objects.get(user=self.request.user)
-        return super(CustomerListView, self).get_queryset().filter(
-            owner=owner.id)
-
 
 class CustomerUpdateView(LoginRequiredMixin, UpdateView):
     login_url = '/login/'
