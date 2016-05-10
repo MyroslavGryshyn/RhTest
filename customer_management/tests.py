@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Customer
+from .models import Customer, CustomerAdmin
 
 from django.contrib.auth.models import User
 from django.test import Client
