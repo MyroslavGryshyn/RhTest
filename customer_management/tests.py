@@ -171,7 +171,7 @@ class CustomerUpdateTest(TestCase):
             first_name="John", last_name="Doe",
             owner=self.john_admin, iban="DE89370400440532013000")
 
-        response = self.client.post(
+        self.client.post(
             '/customers/1/edit/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
@@ -224,3 +224,14 @@ class CustomerDeleteTest(TestCase):
         response = self.client.post('/customers/1/delete/')
 
         self.assertRedirects(response, "/")
+
+    def test_login_required_for_deletion(self):
+        self.client.logout()
+
+        Customer.objects.create(
+            first_name="John", last_name="Doe",
+            owner=self.john_admin, iban="DE89370400440532013001")
+
+        self.client.post('/customers/1/delete/')
+
+        self.assertEqual(Customer.objects.count(), 1)

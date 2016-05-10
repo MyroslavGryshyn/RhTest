@@ -46,7 +46,8 @@ class CustomerUpdateView(LoginRequiredMixin, UpdateView):
         return reverse('home')
 
 
-class CustomerDeleteView(DeleteView):
+class CustomerDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = '/login/'
     model = Customer
     template_name = 'customer_confirm_delete.html'
 
