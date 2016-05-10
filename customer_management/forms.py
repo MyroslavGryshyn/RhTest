@@ -13,6 +13,7 @@ from .models import Customer
 class CustomerCreateForm(ModelForm):
     class Meta:
         model = Customer
+        exclude = ('owner',)
         fields = '__all__'
 
 
@@ -33,11 +34,14 @@ class CustomerCreateForm(ModelForm):
         # add button
         self.helper.add_input(Submit('submit', 'Submit',
                                      css_class='btn-primary'))
+        self.helper.add_input(Submit('cancel_button', 'Cancel',
+                                     css_class='btn-primary'))
 
 
 class CustomerUpdateForm(ModelForm):
     class Meta:
         model = Customer
+        exclude = ('owner',)
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):

@@ -19,6 +19,20 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
     template_name = 'customer_form.html'
     form_class = CustomerCreateForm
 
+    def form_valid(self, form):
+        customer = form.save(commit=False)
+        customer.owner = CustomerAdmin.objects.get(user=self.request.user)
+        customer.save()
+        return super(CustomerCreateView, self).form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+
+        if request.POST.get('cancel_button'):
+            return HttpResponseRedirect(reverse('home'))
+        else:
+            return super(CustomerCreateView, self).post(
+                request, *args, **kwargs)
+
     def get_success_url(self):
         return reverse('home')
 

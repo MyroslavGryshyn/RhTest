@@ -3,8 +3,8 @@ from django.contrib.auth.models import AbstractBaseUser, User
 from localflavor.generic.models import IBANField
 
 
-class CustomerAdmin(models.Model):
-    user = models.ForeignKey(User)
+class CustomerAdmin(AbstractBaseUser):
+    user = models.OneToOneField(User)
 
 
 class Customer(models.Model):
