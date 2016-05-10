@@ -5,7 +5,7 @@ from django.contrib.auth import logout as auth_logout
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from customer_management.models import Customer
 from customer_management.forms import CustomerCreateForm, CustomerUpdateForm
 
@@ -35,7 +35,12 @@ class CustomerUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'customer_form.html'
     form_class = CustomerUpdateForm
 
+
     def post(self, request, *args, **kwargs):
+        object = self.get_object()
+
+        if request.user.id != object.owner.user.id:
+            return HttpResponseRedirect(reverse('home'))
         if request.POST.get('cancel_button'):
             return HttpResponseRedirect(reverse('home'))
         else:
@@ -52,6 +57,10 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'customer_confirm_delete.html'
 
     def post(self, request, *args, **kwargs):
+        object = self.get_object()
+
+        if request.user.id != object.owner.user.id:
+            return HttpResponseRedirect(reverse('home'))
         if request.POST.get('cancel_button'):
             return HttpResponseRedirect(reverse('home'))
         else:

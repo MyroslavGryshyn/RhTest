@@ -258,3 +258,20 @@ class CustomerDeleteTest(TestCase):
         self.client.post('/customers/1/delete/')
 
         self.assertEqual(Customer.objects.count(), 1)
+
+
+    def test_admin_can_delete_only_own_customers(self):
+        self.client.logout()
+
+        jane = User.objects.create_user(
+            'jane', 'lennon@thebeatles.com', 'johnpassword')
+
+        self.client.force_login(jane)
+
+        Customer.objects.create(
+            first_name="John", last_name="Doe",
+            owner=self.john_admin, iban="DE89370400440532013000")
+
+        self.client.post('/customers/1/delete/')
+
+        self.assertEqual(Customer.objects.count(), 1)
