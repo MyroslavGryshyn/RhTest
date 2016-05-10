@@ -89,14 +89,20 @@ class CustomerCreateTest(TestCase):
 class CustomerListTest(TestCase):
 
     def setUp(self):
+        self.client = Client()
+
         john = User.objects.create_user(
             'john', 'lennon@thebeatles.com', 'johnpassword')
 
         self.john_admin = CustomerAdmin.objects.create(
             user=john)
 
+        self.client.force_login(john)
+
     def test_show_no_customers(self):
         response = self.client.get('/')
+
+        self.assertEqual(Customer.objects.count(), 0)
         self.assertContains(response, "There are no customers yet!")
 
     def test_show_all_customers(self):
