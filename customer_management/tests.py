@@ -185,7 +185,7 @@ class CustomerUpdateTest(TestCase):
             first_name="John", last_name="Doe",
             owner=self.john_admin, iban="DE89370400440532013000")
 
-        self.client.post(
+        response = self.client.post(
             '/customers/1/edit/',
             data={'first_name': "Jane",
                   'last_name': "Doe",

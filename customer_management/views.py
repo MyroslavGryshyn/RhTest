@@ -37,10 +37,16 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
         return reverse('home')
 
 
-class CustomerListView(ListView):
+class CustomerListView(LoginRequiredMixin, ListView):
+    login_url = '/login/'
     model = Customer
     template_name = 'customer_list.html'
     context_object_name = 'customers'
+
+    def get_queryset(self):
+        owner = CustomerAdmin.objects.get(user=self.request.user)
+        return super(CustomerListView, self).get_queryset().filter(
+            owner=owner.id)
 
 
 class CustomerUpdateView(LoginRequiredMixin, UpdateView):
@@ -88,5 +94,7 @@ def logout(request):
     auth_logout(request)
     return HttpResponseRedirect(reverse('home'))
 
+
 def create_customer_admin(user, **kwargs):
-   CustomerAdmin.objects.create(user=user)
+    if not CustomerAdmin.objects.get(user=user):
+        CustomerAdmin.objects.create(user=user)
