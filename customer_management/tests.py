@@ -27,7 +27,6 @@ class CustomerCreateTest(TestCase):
             '/add/',
             data={'first_name': "John",
                   'last_name': "Doe",
-                  'owner': self.john_admin.id,
                   'iban': "DE89370400440532013000"}
         )
 
@@ -40,7 +39,6 @@ class CustomerCreateTest(TestCase):
             '/add/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
-                  'owner': self.john_admin.id,
                   'iban': "DE89370400440532013000"}
         )
 
@@ -51,7 +49,6 @@ class CustomerCreateTest(TestCase):
             '/add/',
             data={'first_name': "John",
                   'last_name': "Doe",
-                  'owner': self.john_admin.id,
                   'iban': "GB82WEST1234569876543"}
         )
 
@@ -62,7 +59,6 @@ class CustomerCreateTest(TestCase):
             '/add/',
             data={'first_name': "John",
                   'last_name': "Doe",
-                  'owner': self.john_admin.id,
                   'iban': "DE89370400440532013000"}
         )
 
@@ -72,7 +68,6 @@ class CustomerCreateTest(TestCase):
             '/add/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
-                  'owner': self.john_admin.id,
                   'iban': "DE89370400440532013000"}
         )
 
@@ -85,7 +80,6 @@ class CustomerCreateTest(TestCase):
             '/add/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
-                  'owner': self.john_admin.id,
                   'iban': "DE89370400440532013000"}
         )
 
@@ -141,7 +135,6 @@ class CustomerUpdateTest(TestCase):
             '/customers/1/edit/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
-                  'owner': self.john_admin.id,
                   'iban': "AL47212110090000000235698741"}
         )
 
@@ -157,7 +150,6 @@ class CustomerUpdateTest(TestCase):
             '/customers/1/edit/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
-                  'owner': self.john_admin.id,
                   'iban': "AL47212110090000000235698741"}
         )
 
@@ -175,7 +167,6 @@ class CustomerUpdateTest(TestCase):
             '/customers/1/edit/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
-                  'owner': self.john_admin.id,
                   'iban': "AL47212110090000000235698741"}
         )
 
@@ -198,7 +189,6 @@ class CustomerUpdateTest(TestCase):
             '/customers/1/edit/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
-                  'owner': self.john_admin.id,
                   'iban': "AL47212110090000000235698741"}
         )
 
