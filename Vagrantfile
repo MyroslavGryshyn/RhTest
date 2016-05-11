@@ -12,8 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/xenial64"
-  # config.vm.box = "mero_g/ubuntu-python35"
+  config.vm.box = "mero_g/ubuntu15"
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.synced_folder ".", "/vagrant"
   config.vm.provision "shell", path: "provision.sh"
