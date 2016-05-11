@@ -191,7 +191,7 @@ class CustomerUpdateTest(TestCase):
             first_name="John", last_name="Doe",
             owner=self.john_admin, iban="DE89370400440532013000")
 
-        response = self.client.post(
+        self.client.post(
             '/customers/1/edit/',
             data={'first_name': "Jane",
                   'last_name': "Doe",
@@ -254,7 +254,6 @@ class CustomerDeleteTest(TestCase):
         self.client.post('/customers/1/delete/')
 
         self.assertEqual(Customer.objects.count(), 1)
-
 
     def test_admin_can_delete_only_own_customers(self):
         self.client.logout()

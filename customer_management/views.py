@@ -91,5 +91,5 @@ def logout(request):
 
 
 def create_customer_admin(user, **kwargs):
-    if not CustomerAdmin.objects.get(user=user):
+    if not CustomerAdmin.objects.filter(user=user):
         CustomerAdmin.objects.create(user=user)
