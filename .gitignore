@@ -3,3 +3,4 @@ __pycache__
 *.pyc
 tags
 sharing/__pycache__/
+.vagrant/
