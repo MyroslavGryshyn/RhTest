@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
+{% load static from staticfiles %}
+
 {% block content %}
 {% if customers %}
   <H2 align="center"> List of all customers: </H2>
 
   <table class="table table-striped ">
+      <th class="info"> Photo </th>
       <th class="info"> First name </th>
       <th class="info"> Last name </th>
       <th class="info"> Iban </th>
@@ -12,7 +15,17 @@
     <tr>
     <tbody>
     {% for customer in customers %}
+         {% if customer.avatar %}
+           <td><img class="img-circle"
+                   src="{{ customer.avatar.url }}" height="30"
+                   width="30" /></td>
+           {% else %}
+           <td><img class="img-circle"
+                    src="{% static "img/anonymous.png" %}" height="30"
+                   width="30" /></td>
+          {% endif %}
         {% if request.user == customer.owner.user %}
+         <!-- Check if student has photo uploaded -->
           <td><a href = "{% url 'customer_edit' customer.id %}"> {{customer.first_name}}</a></td>
           <td><a href = "{% url 'customer_edit' customer.id %}">{{customer.last_name}}</a></td>
           <td><a href = "{% url 'customer_edit' customer.id %}">{{customer.iban}}</a></td>

@@ -15,4 +15,4 @@ class Customer(models.Model):
     last_name = models.CharField(max_length=30)
     owner = models.ForeignKey(CustomerAdmin)
     iban = IBANField(unique=True)
-
+    avatar = models.ImageField(blank=True, null=True)

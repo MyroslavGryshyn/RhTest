@@ -15,6 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf.urls.static import static
+
+from django.conf import settings
+
 from customer_management.views import (
     CustomerCreateView, CustomerListView,
     CustomerUpdateView, CustomerDeleteView, logout, LoginPage
@@ -31,4 +35,4 @@ urlpatterns = [
     url(r'^customers/(?P<pk>\d+)/delete/$', CustomerDeleteView.as_view(),
         name='customer_delete'),
     url(r'^logout/$', logout),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
