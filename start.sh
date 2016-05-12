@@ -8,5 +8,3 @@ vagrant ssh --command '
 source /home/vagrant/.virtualenvs/rh-test/bin/activate
 python /vagrant/manage.py runserver 0.0.0.0:8080
 '
-
-# workon rh-test
