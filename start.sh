@@ -6,5 +6,5 @@ vagrant plugin install vagrant-vbguest
 vagrant up
 vagrant ssh --command '
 workon rh-test
-python /vagrant/manage.py runserver 127.0.0.1:8080
+python /vagrant/manage.py runserver 0.0.0.0:8080
 '
