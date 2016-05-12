@@ -1,4 +1,11 @@
 # RhTest
+  Requirements:
+  
+1) Vagrant
+
+2) VirtualBox
+  
+  
   Instructions to run this app
 
 1) Clone this project
