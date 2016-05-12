@@ -4,6 +4,9 @@ from localflavor.generic.models import IBANField
 
 
 class CustomerAdmin(AbstractBaseUser):
+    """
+    Model to extend Django user
+    """
     user = models.OneToOneField(User)
 
 

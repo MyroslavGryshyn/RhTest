@@ -15,6 +15,7 @@
     <tr>
     <tbody>
     {% for customer in customers %}
+         <!-- Check if custormer has photo uploaded -->
          {% if customer.avatar %}
            <td><img class="img-circle"
                    src="{{ customer.avatar.url }}" height="30"
@@ -24,8 +25,9 @@
                     src="{% static "img/anonymous.png" %}" height="30"
                    width="30" /></td>
           {% endif %}
+        <!-- Check if admin is customer owner to make or not records
+        links to update/delete pages -->
         {% if request.user == customer.owner.user %}
-         <!-- Check if custormer has photo uploaded -->
           <td><a href = "{% url 'customer_edit' customer.id %}"> {{customer.first_name}}</a></td>
           <td><a href = "{% url 'customer_edit' customer.id %}">{{customer.last_name}}</a></td>
           <td><a href = "{% url 'customer_edit' customer.id %}">{{customer.iban}}</a></td>

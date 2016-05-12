@@ -20,12 +20,15 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
     form_class = CustomerCreateForm
 
     def form_valid(self, form):
+        # We add owner field from request to disable user to change
+        # owner in form
         customer = form.save(commit=False)
         customer.owner = CustomerAdmin.objects.get(user=self.request.user)
         customer.save()
         return super(CustomerCreateView, self).form_valid(form)
 
     def post(self, request, *args, **kwargs):
+        # Overriding post method to grasp Cancel button
 
         if request.POST.get('cancel_button'):
             return HttpResponseRedirect(reverse('home'))
@@ -51,6 +54,8 @@ class CustomerUpdateView(LoginRequiredMixin, UpdateView):
     form_class = CustomerUpdateForm
 
     def post(self, request, *args, **kwargs):
+        # Overriding post method to understand if admin has rights to
+        # update customer
         object = self.get_object()
 
         if request.user.id != object.owner.user.id:
@@ -71,6 +76,8 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'customer_confirm_delete.html'
 
     def post(self, request, *args, **kwargs):
+        # Overriding post method to understand if admin has rights to
+        # delete customer
         object = self.get_object()
 
         if request.user.id != object.owner.user.id:
@@ -91,5 +98,7 @@ def logout(request):
 
 
 def create_customer_admin(user, **kwargs):
+    # Function to create CustomerAdmin record from user
+    # during social auth pipeline
     if not CustomerAdmin.objects.filter(user=user):
         CustomerAdmin.objects.create(user=user)
