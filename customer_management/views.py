@@ -2,13 +2,13 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
 from braces.views import LoginRequiredMixin
 from customer_management.forms import CustomerCreateForm, CustomerUpdateForm
-from customer_management.models import Customer, CustomerAdmin
+from customer_management.models import Customer
 
 
 class LoginPage(TemplateView):
@@ -27,7 +27,7 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
         customer = form.save(commit=False)
         customer.owner = self.request.user
         customer.save()
-        return super(CustomerCreateView, self).form_valid(form)
+        return super().form_valid(form)
 
     def post(self, request, *args, **kwargs):
         # Overriding post method to grasp Cancel button
@@ -35,7 +35,7 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
         if request.POST.get('cancel_button'):
             return redirect('home')
         else:
-            return super(CustomerCreateView, self).post(
+            return super().post(
                 request, *args, **kwargs)
 
     def get_success_url(self):
@@ -49,11 +49,10 @@ class CustomerListView(LoginRequiredMixin, ListView):
     context_object_name = 'customers'
 
 
-class CustomerUpdateView(LoginRequiredMixin, UpdateView):
-    login_url = '/login/'
-    model = Customer
-    template_name = 'customer_form.html'
-    form_class = CustomerUpdateForm
+class PostMixin(View):
+    """
+    Base class to override post method in Update and Delete views.
+    """
 
     def post(self, request, *args, **kwargs):
         # Overriding post method to understand if admin has rights to
@@ -65,33 +64,24 @@ class CustomerUpdateView(LoginRequiredMixin, UpdateView):
         if request.POST.get('cancel_button'):
             return redirect('home')
         else:
-            return super(CustomerUpdateView, self).post(
+            return super().post(
                 request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse('home')
 
 
-class CustomerDeleteView(LoginRequiredMixin, DeleteView):
+class CustomerUpdateView(LoginRequiredMixin, PostMixin, UpdateView):
+    login_url = '/login/'
+    model = Customer
+    template_name = 'customer_form.html'
+    form_class = CustomerUpdateForm
+
+
+class CustomerDeleteView(LoginRequiredMixin, PostMixin, DeleteView):
     login_url = '/login/'
     model = Customer
     template_name = 'customer_confirm_delete.html'
-
-    def post(self, request, *args, **kwargs):
-        # Overriding post method to understand if admin has rights to
-        # delete customer
-        object = self.get_object()
-
-        if request.user.id != object.owner.id:
-            return redirect('home')
-        if request.POST.get('cancel_button'):
-            return redirect('home')
-        else:
-            return super(CustomerDeleteView, self).post(
-                request, *args, **kwargs)
-
-    def get_success_url(self):
-        return reverse('home')
 
 
 def logout(request):

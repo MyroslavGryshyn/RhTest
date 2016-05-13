@@ -15,7 +15,7 @@ class CustomerCreateForm(ModelForm):
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
-        super(CustomerCreateForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
 
@@ -43,7 +43,7 @@ class CustomerUpdateForm(ModelForm):
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
-        super(CustomerUpdateForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.helper = FormHelper(self)
 
