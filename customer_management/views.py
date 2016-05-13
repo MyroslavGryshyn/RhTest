@@ -1,12 +1,13 @@
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from django.contrib.auth import logout as auth_logout
+from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
+
 from braces.views import LoginRequiredMixin
-from customer_management.models import Customer, CustomerAdmin
 from customer_management.forms import CustomerCreateForm, CustomerUpdateForm
+from customer_management.models import Customer, CustomerAdmin
 
 
 class LoginPage(TemplateView):
@@ -31,7 +32,7 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
         # Overriding post method to grasp Cancel button
 
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(reverse('home'))
+            return redirect('home')
         else:
             return super(CustomerCreateView, self).post(
                 request, *args, **kwargs)
@@ -59,9 +60,9 @@ class CustomerUpdateView(LoginRequiredMixin, UpdateView):
         object = self.get_object()
 
         if request.user.id != object.owner.user.id:
-            return HttpResponseRedirect(reverse('home'))
+            return redirect('home')
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(reverse('home'))
+            return redirect('home')
         else:
             return super(CustomerUpdateView, self).post(
                 request, *args, **kwargs)
@@ -81,9 +82,9 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
         object = self.get_object()
 
         if request.user.id != object.owner.user.id:
-            return HttpResponseRedirect(reverse('home'))
+            return redirect('home')
         if request.POST.get('cancel_button'):
-            return HttpResponseRedirect(reverse('home'))
+            return redirect('home')
         else:
             return super(CustomerDeleteView, self).post(
                 request, *args, **kwargs)
@@ -94,7 +95,7 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
 
 def logout(request):
     auth_logout(request)
-    return HttpResponseRedirect(reverse('home'))
+    return redirect('home')
 
 
 def create_customer_admin(user, **kwargs):
