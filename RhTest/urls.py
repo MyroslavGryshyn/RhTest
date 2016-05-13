@@ -26,8 +26,8 @@ from customer_management.views import (
 urlpatterns = [
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^$', CustomerListView.as_view(), name='home'),
-    url(r'^login/', LoginPage.as_view(), name='login'),
-    url(r'^add/', CustomerCreateView.as_view(), name='customer_add'),
+    url(r'^login/$', LoginPage.as_view(), name='login'),
+    url(r'^add/$', CustomerCreateView.as_view(), name='customer_add'),
     url(r'^customers/(?P<pk>\d+)/edit/$', CustomerUpdateView.as_view(),
         name='customer_edit'),
     url(r'^customers/(?P<pk>\d+)/delete/$', CustomerDeleteView.as_view(),

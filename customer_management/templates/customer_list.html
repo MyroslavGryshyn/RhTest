@@ -27,7 +27,7 @@
           {% endif %}
         <!-- Check if admin is customer owner to make or not records
         links to update/delete pages -->
-        {% if request.user == customer.owner.user %}
+        {% if request.user == customer.owner %}
           <td><a href = "{% url 'customer_edit' customer.id %}"> {{customer.first_name}}</a></td>
           <td><a href = "{% url 'customer_edit' customer.id %}">{{customer.last_name}}</a></td>
           <td><a href = "{% url 'customer_edit' customer.id %}">{{customer.iban}}</a></td>

@@ -1,4 +1,5 @@
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
@@ -24,7 +25,7 @@ class CustomerCreateView(LoginRequiredMixin, CreateView):
         # We add owner field from request to disable user to change
         # owner in form
         customer = form.save(commit=False)
-        customer.owner = CustomerAdmin.objects.get(user=self.request.user)
+        customer.owner = self.request.user
         customer.save()
         return super(CustomerCreateView, self).form_valid(form)
 
@@ -59,7 +60,7 @@ class CustomerUpdateView(LoginRequiredMixin, UpdateView):
         # update customer
         object = self.get_object()
 
-        if request.user.id != object.owner.user.id:
+        if request.user.id != object.owner.id:
             return redirect('home')
         if request.POST.get('cancel_button'):
             return redirect('home')
@@ -81,7 +82,7 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
         # delete customer
         object = self.get_object()
 
-        if request.user.id != object.owner.user.id:
+        if request.user.id != object.owner.id:
             return redirect('home')
         if request.POST.get('cancel_button'):
             return redirect('home')
@@ -96,10 +97,3 @@ class CustomerDeleteView(LoginRequiredMixin, DeleteView):
 def logout(request):
     auth_logout(request)
     return redirect('home')
-
-
-def create_customer_admin(user, **kwargs):
-    # Function to create CustomerAdmin record from user
-    # during social auth pipeline
-    if not CustomerAdmin.objects.filter(user=user):
-        CustomerAdmin.objects.create(user=user)

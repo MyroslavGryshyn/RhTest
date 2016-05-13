@@ -1,13 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, User
+from django.contrib.auth.models import User
 from localflavor.generic.models import IBANField
-
-
-class CustomerAdmin(AbstractBaseUser):
-    """
-    Model to extend Django user
-    """
-    user = models.OneToOneField(User)
 
 
 class Customer(models.Model):
@@ -16,6 +9,6 @@ class Customer(models.Model):
     """
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    owner = models.ForeignKey(CustomerAdmin)
+    owner = models.ForeignKey(User)
     iban = IBANField(unique=True)
     avatar = models.ImageField(blank=True, null=True)

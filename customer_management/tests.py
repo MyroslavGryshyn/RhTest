@@ -1,10 +1,8 @@
-from django.test import TestCase
-from .models import Customer, CustomerAdmin
-
 from django.contrib.auth.models import User
-from django.test import Client
-
 from django.core.urlresolvers import reverse
+from django.test import Client, TestCase
+
+from .models import Customer
 
 
 class CustomerCreateTest(TestCase):
@@ -13,9 +11,6 @@ class CustomerCreateTest(TestCase):
         self.client = Client()
         john = User.objects.create_user(
             'john', 'lennon@thebeatles.com', 'johnpassword')
-
-        self.john_admin = CustomerAdmin.objects.create(
-            user=john)
 
         self.client.force_login(john)
 
@@ -91,13 +86,10 @@ class CustomerListTest(TestCase):
     def setUp(self):
         self.client = Client()
 
-        john = User.objects.create_user(
+        self.john = User.objects.create_user(
             'john', 'lennon@thebeatles.com', 'johnpassword')
 
-        self.john_admin = CustomerAdmin.objects.create(
-            user=john)
-
-        self.client.force_login(john)
+        self.client.force_login(self.john)
 
     def test_show_no_customers(self):
         response = self.client.get('/')
@@ -108,10 +100,10 @@ class CustomerListTest(TestCase):
     def test_show_all_customers(self):
         john_doe = Customer.objects.create(
             first_name="John", last_name="Doe",
-            owner=self.john_admin, iban="DE89370400440532013000")
+            owner=self.john, iban="DE89370400440532013000")
         jane_doe = Customer.objects.create(
             first_name="Jane", last_name="Doe",
-            owner=self.john_admin, iban="DE89370400440532013001")
+            owner=self.john, iban="DE89370400440532013001")
 
         response = self.client.get('/')
 
@@ -124,18 +116,15 @@ class CustomerUpdateTest(TestCase):
     def setUp(self):
         self.client = Client()
 
-        john = User.objects.create_user(
+        self.john = User.objects.create_user(
             'john', 'lennon@thebeatles.com', 'johnpassword')
 
-        self.john_admin = CustomerAdmin.objects.create(
-            user=john)
-
-        self.client.force_login(john)
+        self.client.force_login(self.john)
 
     def test_saving_a_POST_request(self):
         Customer.objects.create(
             first_name="John", last_name="Doe",
-            owner=self.john_admin, iban="DE89370400440532013000")
+            owner=self.john, iban="DE89370400440532013000")
 
         self.client.post(
             '/customers/1/edit/',
@@ -150,7 +139,7 @@ class CustomerUpdateTest(TestCase):
     def test_redirecting_after_POST_request(self):
         Customer.objects.create(
             first_name="John", last_name="Doe",
-            owner=self.john_admin, iban="DE89370400440532013000")
+            owner=self.john, iban="DE89370400440532013000")
 
         response = self.client.post(
             '/customers/1/edit/',
@@ -167,7 +156,7 @@ class CustomerUpdateTest(TestCase):
 
         Customer.objects.create(
             first_name="John", last_name="Doe",
-            owner=self.john_admin, iban="DE89370400440532013000")
+            owner=self.john, iban="DE89370400440532013000")
 
         self.client.post(
             '/customers/1/edit/',
@@ -189,7 +178,7 @@ class CustomerUpdateTest(TestCase):
 
         Customer.objects.create(
             first_name="John", last_name="Doe",
-            owner=self.john_admin, iban="DE89370400440532013000")
+            owner=self.john, iban="DE89370400440532013000")
 
         self.client.post(
             '/customers/1/edit/',
@@ -206,18 +195,15 @@ class CustomerDeleteTest(TestCase):
 
     def setUp(self):
         self.client = Client()
-        john = User.objects.create_user(
+        self.john = User.objects.create_user(
             'john', 'lennon@thebeatles.com', 'johnpassword')
 
-        self.john_admin = CustomerAdmin.objects.create(
-            user=john)
-
-        self.client.force_login(john)
+        self.client.force_login(self.john)
 
     def test_delete_customer(self):
         Customer.objects.create(
             first_name="John", last_name="Doe",
-            owner=self.john_admin, iban="DE89370400440532013001")
+            owner=self.john, iban="DE89370400440532013001")
         self.client.post('/customers/1/delete/')
 
         self.assertEqual(Customer.objects.count(), 0)
@@ -225,10 +211,10 @@ class CustomerDeleteTest(TestCase):
     def test_deletes_right_customer(self):
         Customer.objects.create(
             first_name="John", last_name="Doe",
-            owner=self.john_admin, iban="DE89370400440532013001")
+            owner=self.john, iban="DE89370400440532013001")
         Customer.objects.create(
             first_name="Jane", last_name="Doe",
-            owner=self.john_admin, iban="AL47212110090000000235698741")
+            owner=self.john, iban="AL47212110090000000235698741")
 
         self.client.post('/customers/1/delete/')
 
@@ -238,7 +224,7 @@ class CustomerDeleteTest(TestCase):
     def test_redirecting_after_deletion(self):
         Customer.objects.create(
             first_name="John", last_name="Doe",
-            owner=self.john_admin, iban="DE89370400440532013001")
+            owner=self.john, iban="DE89370400440532013001")
 
         response = self.client.post('/customers/1/delete/')
 
@@ -249,7 +235,7 @@ class CustomerDeleteTest(TestCase):
 
         Customer.objects.create(
             first_name="John", last_name="Doe",
-            owner=self.john_admin, iban="DE89370400440532013001")
+            owner=self.john, iban="DE89370400440532013001")
 
         self.client.post('/customers/1/delete/')
 
@@ -265,8 +251,9 @@ class CustomerDeleteTest(TestCase):
 
         Customer.objects.create(
             first_name="John", last_name="Doe",
-            owner=self.john_admin, iban="DE89370400440532013000")
+            owner=self.john, iban="DE89370400440532013000")
 
         self.client.post('/customers/1/delete/')
 
         self.assertEqual(Customer.objects.count(), 1)
+
